@@ -35,6 +35,48 @@ public class PersonController {
         return personRepository.findOne(id);
     }
 
+    @RequestMapping(value = "/person/{id}",method = RequestMethod.DELETE)
+    public Object deletePerson(@PathVariable Long id){
+        personRepository.delete(id);
+        success.setCode(3);
+        success.setMessage("Deleted Successfully");
+        return success;
+    }
+
+    @RequestMapping(value = "/persons",method = RequestMethod.DELETE)
+    public Object deleteAllPersons(){
+        personRepository.deleteAll();
+        success.setCode(3);
+        success.setMessage("Deleted Successfully");
+        return success;
+    }
+
+    @RequestMapping(value = "/person/{id}",method = RequestMethod.PUT)
+    @ResponseBody
+    public Object updatePerson(@PathVariable Long id,@Valid Person p,BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            List<FieldError> errors = bindingResult.getFieldErrors();
+            List<String> message = new ArrayList<>();
+            error.setCode(-2);
+            for (FieldError e : errors){
+                message.add("@" + e.getField().toUpperCase() + ":" + e.getDefaultMessage());
+            }
+            error.setMessage("Update Failed");
+            error.setCause(message.toString());
+            return error;
+        }
+        else
+        {
+            Person person = personRepository.findOne(id);
+            person = p;
+            personRepository.save(person);
+            success.setMessage("Updated Successfully");
+            success.setCode(2);
+            return success;
+        }
+
+    }
+
     @RequestMapping(value = "/person/add",method = RequestMethod.POST)
     @ResponseBody
     public Object getPersonData(@Valid Person p, BindingResult bindingResult){
