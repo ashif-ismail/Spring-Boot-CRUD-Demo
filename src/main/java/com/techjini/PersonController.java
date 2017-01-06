@@ -1,6 +1,7 @@
 package com.techjini;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * Created by techjini on 4/1/17.
  */
-@RequestMapping("/home")
+
 @RestController
 public class PersonController {
 
@@ -22,7 +23,11 @@ public class PersonController {
     Error error = new Error();
     Success success = new Success();
 
-
+    @RequestMapping("/")
+    public String greetUser(){
+        return "Hello,Java Lover <3";
+    }
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping("/persons")
     public List<Person> getAllPerson(){
         List<Person> personsList = new ArrayList<>();
@@ -43,6 +48,7 @@ public class PersonController {
         return success;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/persons",method = RequestMethod.DELETE)
     public Object deleteAllPersons(){
         personRepository.deleteAll();

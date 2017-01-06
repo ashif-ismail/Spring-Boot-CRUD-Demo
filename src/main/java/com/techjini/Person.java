@@ -31,7 +31,7 @@ public class Person {
     @Max(70)
     private int age;
 
-    @ElementCollection(targetClass=Integer.class)
+    @ElementCollection
     private List<Integer> nos;
     private boolean ismarried;
 
