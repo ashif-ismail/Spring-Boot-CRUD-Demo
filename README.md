@@ -1,4 +1,4 @@
-# Spring Boot-CRUD-demo
+# Spring Boot-CRUD-Demo
 
 Spring Boot CRUD demo is demonstrating how to implement simple CRUD operations with a `Person` entity.
 
@@ -8,6 +8,7 @@ This project is based on the [Spring Boot](http://projects.spring.io/spring-boot
 - Spring Core
 - Spring Data (Hibernate & MySQL)
 - Spring MVC (Tomcat)
+- Spring Security (Basic Authentication)
 
 ## Installation 
 The project is created with Maven, so you just need to import it to your IDE and build the project to resolve the dependencies
@@ -21,6 +22,7 @@ spring.datasource.url=jdbc:mysql://localhost:3306/person_db
 spring.datasource.username=root
 spring.datasource.password=
 spring.jpa.hibernate.ddl-auto=update
+server.port=7777
 ```
 
 ## Usage 
